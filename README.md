@@ -1,4 +1,4 @@
-# just_baseball_things
+# Quantitative Analysis of Individual Player Impact on MLB Game Attendance
 
 ## Project statement
 
@@ -32,13 +32,16 @@ Depending on the eventual trajectory of this analysis, other baseball data sets 
 * [FanGraphs](https://www.fangraphs.com/):
     * Unofficial home of public sabermetric analyses.
 
+## Files
+At this stage, all data processing is contained within the file `exploratory_analysis.ipynb`.
+
 ## Data Pipeline
 ### Initial ETL
 * **Extract** csv files for Lahman directly from website
-    * Leverage wget and zipfile modules, extract 
+    * Leverage `wget` and `zipfile` modules, extract necessary CSVs into pandas dataframe
 * **Transform** layer in Pandas
-    * Trim unnecessary files
-* **Load** to Amazon RDS-hosted postgres database.  Store all required source tables and any processed tables within db.
+    * Trim unnecessary columns and records for analysis (will be removing all records prior to 1995)
+* **Load** to Amazon RDS-hosted postgres database using SQLAlchemy.  Store all required source tables and any processed tables within db.
 
 ## Machine Learning Questions
 * Supervised or unsupervised?
