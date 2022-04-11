@@ -33,7 +33,7 @@ Depending on the eventual trajectory of this analysis, other baseball data sets 
     * Unofficial home of public sabermetric analyses.
 
 ## Files
-At this stage, all data processing is contained within the file `exploratory_analysis.ipynb`.
+At this stage, all data processing is contained within the file `exploratory_analysis.ipynb`.  Database schema work resides in `schema.sql`.
 
 ## Data Pipeline
 ### Initial ETL
@@ -41,7 +41,7 @@ At this stage, all data processing is contained within the file `exploratory_ana
     * Leverage `wget` and `zipfile` modules, extract necessary CSVs into pandas dataframe
 * **Transform** layer in Pandas
     * Trim unnecessary columns and records for analysis (will be removing all records prior to 1995)
-* **Load** to Amazon RDS-hosted postgres database using SQLAlchemy.  Store all required source tables and any processed tables within db.
+* **Load** to locally-hosted postgres database using SQLAlchemy.  Store all required source tables and any processed tables within db.  Will likely eventually host data set on AWS RDS for public consumption.
 
 ## Machine Learning Questions
 * Supervised or unsupervised?
