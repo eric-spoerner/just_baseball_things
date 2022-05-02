@@ -17,6 +17,17 @@ Questions to be addressed in this analysis:
 * Whom should MLB be using for marketing campaigns?
 * Can we identify specific stars to market in specific markets?
 
+## The major data issue: COVID
+
+The above project intent may be extremely difficult to achieve given the state of data with regard to current players.  Specifically, attendance statistics regarding the most recent two baseball seasons, 2020 and 2021, are tainted due to the effects of the coronavirus pandemic on sporting event attendance.
+
+While 2020 saw a 60-game season with no attendees whatsoever save for [cardboard cutouts](https://ftw.usatoday.com/2020/07/mlb-cardboard-cutouts-fans-dogs-celebrities-hit), 2021 was subject to a patchwork of changes to attendance due to local regulations in the jurisdictions in which the team played.  For example:
+* The state of Texas allowed full attendance from the beginning of the season
+* The state of California allowed quarter-capacity attendance to begin the season, ramping up to full attendance mid-season.
+* The Toronto Blue Jays were prohibited from hosting US teams at all, and played their entire season in a minor league stadium in Buffalo, New York.
+
+Analysis of the implications on the data is ongoing, but may compromise the ability to predict current marketable players.  A more useful exercise given the data at hand may involve predicting attendance numbers for 2020 and 2021 as they would have existed during a baseball season unaffected by the pandemic.
+
 ## Data Set
 The primary data set that has been used so far for exploratory analysis and probably model construction is [Lahman's Baseball Database](https://www.seanlahman.com/baseball-archive/statistics/), which contains robust data regarding teams and players for all professional baseball leagues (except the Negro Leagues) from 1871 through 2021.  This data set can be used to extract most of the meaningful metrics required for this analysis, including individual and team performance metrics, salaries, win/loss records, and daily/annual game attendance.  Full data schema is available [here](https://www.seanlahman.com/files/database/readme2021.txt).
 
@@ -32,8 +43,13 @@ Depending on the eventual trajectory of this analysis, other baseball data sets 
 * [FanGraphs](https://www.fangraphs.com/):
     * Unofficial home of public sabermetric analyses.
 
+Additional data sets to augment the Lahman's data include:
+
+* [Implicit price deflator data](https://fred.stlouisfed.org/series/GDPDEF) courtesy of the United States Federal Reserve), which has been integrated with payroll data to adjust for inflation.
+* [Clem's baseball stadium statistics](http://www.andrewclem.com/Baseball/Stadium_statistics.html) - Import still in process.  Will be integrated with attendance metrics to control for total stadium capacity.
+
 ## Files
-At this stage, all data processing is contained within the file `exploratory_analysis.ipynb`.  Database schema work resides in `schema.sql`.
+At this stage, all data processing is contained within the file `exploratory_analysis.ipynb`.  This will be subsequently converted into a repeatable ETL script. Postgres database schema work resides in `schema.sql`.
 
 ## Data Pipeline
 ### Initial ETL
@@ -43,15 +59,17 @@ At this stage, all data processing is contained within the file `exploratory_ana
     * Trim unnecessary columns and records for analysis (will be removing all records prior to 1995)
 * **Load** to locally-hosted postgres database using SQLAlchemy.  Store all required source tables and any processed tables within db.  Will likely eventually host data set on AWS RDS for public consumption.
 
+## Exploratory Data Visualizations
+Conducted in Tableau Public, and located [here](https://public.tableau.com/app/profile/eric.spoerner/viz/baseball_analysis_16502157830180/Story1?publish=yes).
+
+Visualization contains analysis of payrolls over the last several decades, along with winning percentages by season.  Notably, the initial analysis has found that team payroll is more effective than win-loss record for predicting attendance.
+
 ## Machine Learning Questions
 * Supervised or unsupervised?
 * What model are we using??
 * Two potential investigation paths:
     * Live tracking of day-to-day game data 
     * Historical "macro" statistical tracking
-
-## Data visualiziation
-TBD
 
 ## Other factors in attendance to control for
 * City/Region/Media Market
